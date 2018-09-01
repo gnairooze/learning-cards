@@ -40,11 +40,11 @@ namespace LearningCards
 
                 models.Add(new Model()
                 {
-                    Content = removeQuotes(values[0]),
-                    Location = removeQuotes(values[1]),
-                    LTR = removeQuotes(values[3]).ToLower() == "ltr",
-                    URL = new Uri(removeQuotes(values[2])),
-                    ImageLocation = removeQuotes(values[4])
+                    Content = processText(values[0]),
+                    Location = processText(values[1]),
+                    LTR = processText(values[3]).ToLower() == "ltr",
+                    URL = new Uri(processText(values[2])),
+                    ImageLocation = processText(values[4])
                 });
 
                 isFirstLine = false;
@@ -55,7 +55,7 @@ namespace LearningCards
             return true;
         }
 
-        private static string removeQuotes(string input)
+        private static string processText(string input)
         {
             if(input == string.Empty)
             {
@@ -72,6 +72,9 @@ namespace LearningCards
             {
                 output = string.Copy(input);
             }
+
+            output = output.Replace("\\r\\n", Environment.NewLine);
+            output = output.Replace("\\n", Environment.NewLine);
 
             return output;
         }

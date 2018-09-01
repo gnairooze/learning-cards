@@ -97,7 +97,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Image x:Name="imgMain" Stretch="None" HorizontalAlignment="Center" Margin="10,10,10,10" Grid.Row="1" Grid.ColumnSpan="4" Grid.ZIndex="1"/>
-            <TextBox x:Name="txtContent" Margin="10,10,10,10" Grid.Row="2" Grid.ColumnSpan="4" TextWrapping="Wrap" Text="TextBox" FontSize="36" TextAlignment="Center" IsReadOnly="True" FontFamily="Arial" Background="Bisque" BorderBrush="Bisque" BorderThickness="0"/>
+            <TextBox x:Name="txtContent" Margin="10,10,10,10" Grid.Row="2" Grid.ColumnSpan="4" TextWrapping="Wrap" Text="TextBox" FontSize="36" TextAlignment="Center" IsReadOnly="True" FontFamily="Arial" Background="Bisque" BorderBrush="Bisque" BorderThickness="0" AcceptsReturn="True" />
             <TextBlock x:Name="txtblkLinkContent" Grid.Row="3" Grid.ColumnSpan="4" FontSize="36" TextAlignment="Center" FontFamily="Arial">           
             <Hyperlink x:Name="lnkLocation" NavigateUri="http://www.google.com" RequestNavigate="lnkLocation_RequestNavigate">
                 <Hyperlink.Inlines>
