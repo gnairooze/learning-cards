@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LearningCards.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="DataPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.\Resources\sample-data.csv</Value>
-    </Setting>
     <Setting Name="Interval" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
@@ -31,6 +28,15 @@
     </Setting>
     <Setting Name="BackgroundColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">255,255,228,196</Value>
+    </Setting>
+    <Setting Name="DataPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.\Resources\data2.csv</Value>
+    </Setting>
+    <Setting Name="ContentAlign" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Left</Value>
+    </Setting>
+    <Setting Name="LocationAlign" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Left</Value>
     </Setting>
   </Settings>
 </SettingsFile>

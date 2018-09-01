@@ -108,8 +108,38 @@ namespace LearningCards
 
             setTimer();
 
+            setAlignment();
             displayModel(getModel());
             _Timer.Start();
+        }
+
+        private void setAlignment()
+        {
+            switch (Properties.Settings.Default.ContentAlign.ToLower())
+            {
+                case "left":
+                    txtContent.TextAlignment = TextAlignment.Left;
+                    break;
+                case "right":
+                    txtContent.TextAlignment = TextAlignment.Right;
+                    break;
+                case "center":
+                    txtContent.TextAlignment = TextAlignment.Center;
+                    break;
+            }
+
+            switch (Properties.Settings.Default.LocationAlign.ToLower())
+            {
+                case "left":
+                    txtblkLinkContent.HorizontalAlignment = HorizontalAlignment.Left;
+                    break;
+                case "right":
+                    txtblkLinkContent.HorizontalAlignment = HorizontalAlignment.Right;
+                    break;
+                case "center":
+                    txtblkLinkContent.HorizontalAlignment = HorizontalAlignment.Center;
+                    break;
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
