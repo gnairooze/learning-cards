@@ -57,6 +57,11 @@ namespace LearningCards
 
         private static string removeQuotes(string input)
         {
+            if(input == string.Empty)
+            {
+                return input;
+            }
+
             string output;
 
             if (input[0] == '"' && input[input.Length - 1] == '"')
