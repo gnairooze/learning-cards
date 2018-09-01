@@ -22,6 +22,11 @@ namespace LearningCards
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
         #region attributes
         private const string TITLE = "Learning Cards";
         private List<Model> _Models;
@@ -68,39 +73,7 @@ namespace LearningCards
         internal int PositionHistoryIndex { get; set; }
         #endregion
 
-        private void refreshPositionControls()
-        {
-            //history is enabled and the current model did not reach the end of history
-            if(this.PositionHistoryIndex != -1 && this.PositionHistoryIndex < this.PositionHistory.Count - 1)
-            {
-                btnForward.IsEnabled = true;
-            }
-            else
-            {
-                btnForward.IsEnabled = false;
-            }
-            
-            if(this.PositionHistoryIndex != 0 && this.PositionHistory.Count > 1)
-            {
-                btnBack.IsEnabled = true;
-            }
-            else
-            {
-                btnBack.IsEnabled = false;
-            }
-        }
-
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
-        private void lnkLocation_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
-        }
-
+        #region window event handlers
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             List<Model> models; string message;
@@ -109,7 +82,7 @@ namespace LearningCards
             this.PositionHistoryIndex = -1;
             btnForward.IsEnabled = false;
             btnBack.IsEnabled = false;
-
+            setBackgoundColor();
             setWindowSize();
 
             bool loadedSuccessfully = Data.LoadData(Properties.Settings.Default.DataPath, true, out models, out message);
@@ -137,6 +110,207 @@ namespace LearningCards
 
             displayModel(getModel());
             _Timer.Start();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            saveCurrentWindowSize();
+        }
+        #endregion
+
+        #region context menu event handlers
+        private void mnuFontIncrease_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.FontSize += 2;
+            Properties.Settings.Default.Save();
+
+            setFontSize(Properties.Settings.Default.FontSize);
+        }
+
+        private void mnuFontDecrease_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.FontSize -= 2;
+            Properties.Settings.Default.Save();
+
+            setFontSize(Properties.Settings.Default.FontSize);
+        }
+
+        private void mnuPlayRandom_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            if (myItem.IsCheckable)
+            {
+                Properties.Settings.Default.PlayRandom = myItem.IsChecked;
+                Properties.Settings.Default.Save();
+            }
+
+            e.Handled = true;
+        }
+
+        private void mnuPausePlay_Click(object sender, RoutedEventArgs e)
+        {
+            string header = ((MenuItem)e.Source).Header.ToString();
+
+            pausePlay(header);
+        }
+
+        private void mnuInterval_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            switch (myItem.Name)
+            {
+                case "mnuInterval3s":
+                    Properties.Settings.Default.Interval = 3;
+                    break;
+                case "mnuInterval10s":
+                    Properties.Settings.Default.Interval = 10;
+                    break;
+                case "mnuInterval20s":
+                    Properties.Settings.Default.Interval = 20;
+                    break;
+                case "mnuInterval30s":
+                    Properties.Settings.Default.Interval = 30;
+                    break;
+                case "mnuInterval1":
+                    Properties.Settings.Default.Interval = 60;
+                    break;
+                case "mnuInterval3":
+                    Properties.Settings.Default.Interval = 180;
+                    break;
+                case "mnuInterval5":
+                    Properties.Settings.Default.Interval = 300;
+                    break;
+                case "mnuInterval10":
+                    Properties.Settings.Default.Interval = 600;
+                    break;
+                case "mnuInterval15":
+                    Properties.Settings.Default.Interval = 900;
+                    break;
+                case "mnuInterval30":
+                    Properties.Settings.Default.Interval = 1800;
+                    break;
+                case "mnuInterval60":
+                    Properties.Settings.Default.Interval = 3600;
+                    break;
+            }
+
+            Properties.Settings.Default.Save();
+
+            setTimer();
+            displayIntervalOnContextMenu();
+        }
+
+        private void mnuViewSettings_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(readSettings(), "Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        #endregion
+
+        #region history buttons event handlers
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.PositionHistoryIndex == 0 || this.PositionHistory.Count <= 1)
+            {
+                return;
+            }
+
+            if (this.PositionHistoryIndex == -1)
+            {
+                this.PositionHistoryIndex = this.PositionHistory.Count - 2;
+            }
+            else
+            {
+                if (this.PositionHistoryIndex >= 1)
+                {
+                    this.PositionHistoryIndex--;
+                }
+            }
+
+            this.Position = this.PositionHistory.ElementAt(this.PositionHistoryIndex);
+
+            Model model = this.Models.ElementAt(this.Position);
+
+            displayModel(model);
+
+            refreshPositionControls();
+        }
+
+        private void btnForward_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.PositionHistoryIndex == -1 || this.PositionHistoryIndex == this.PositionHistory.Count - 1)
+            {
+                this.PositionHistoryIndex = -1;
+                return;
+            }
+
+            this.PositionHistoryIndex++;
+            this.Position = this.PositionHistory.ElementAt(PositionHistoryIndex);
+
+            Model model = this.Models.ElementAt(this.Position);
+
+            displayModel(model);
+
+            refreshPositionControls();
+        }
+        #endregion
+
+        #region  other event handlers
+        private void lnkLocation_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (this.PositionHistoryIndex == -1)
+            {
+                displayModel(getModel());
+
+                refreshPositionControls();
+            }
+            else
+            {
+                btnForward_Click(this, new RoutedEventArgs());
+            }
+
+        }
+
+        private void btnPause_Click(object sender, RoutedEventArgs e)
+        {
+            if (_Timer.IsEnabled)
+            {
+                pausePlay("pause");
+            }
+            else
+            {
+                pausePlay("play");
+            }
+        }
+        #endregion
+
+        private void refreshPositionControls()
+        {
+            //history is enabled and the current model did not reach the end of history
+            if(this.PositionHistoryIndex != -1 && this.PositionHistoryIndex < this.PositionHistory.Count - 1)
+            {
+                btnForward.IsEnabled = true;
+            }
+            else
+            {
+                btnForward.IsEnabled = false;
+            }
+            
+            if(this.PositionHistoryIndex != 0 && this.PositionHistory.Count > 1)
+            {
+                btnBack.IsEnabled = true;
+            }
+            else
+            {
+                btnBack.IsEnabled = false;
+            }
         }
 
         private void displayIntervalOnContextMenu()
@@ -213,34 +387,6 @@ namespace LearningCards
             _Timer.Interval = new TimeSpan(0, minutes, seconds);
         }
 
-        private void setWindowSize()
-        {
-            this.Top = Properties.Settings.Default.Top;
-            this.Left = Properties.Settings.Default.Left;
-            this.Height = Properties.Settings.Default.Height;
-            this.Width = Properties.Settings.Default.Width;
-
-            if (Properties.Settings.Default.Maximized)
-            {
-                WindowState = WindowState.Maximized;
-            }
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            if(this.PositionHistoryIndex == -1)
-            {
-                displayModel(getModel());
-
-                refreshPositionControls();
-            }
-            else
-            {
-                btnForward_Click(this, new RoutedEventArgs());
-            }
-            
-        }
-
         private void displayModel(Model model)
         {
             txtContent.Text = model.Content;
@@ -278,31 +424,23 @@ namespace LearningCards
             return this.Models.ElementAt(this.Position);
         }
 
-        private void mnuFontIncrease_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.FontSize += 2;
-            Properties.Settings.Default.Save();
-
-            setFontSize(Properties.Settings.Default.FontSize);
-        }
-
-        private void mnuFontDecrease_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.FontSize -= 2;
-            Properties.Settings.Default.Save();
-
-            setFontSize(Properties.Settings.Default.FontSize);
-        }
-
         private void setFontSize(int fontSize)
         {
             txtContent.FontSize = fontSize;
             txtblkLinkContent.FontSize = fontSize;
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void setWindowSize()
         {
-            saveCurrentWindowSize();
+            this.Top = Properties.Settings.Default.Top;
+            this.Left = Properties.Settings.Default.Left;
+            this.Height = Properties.Settings.Default.Height;
+            this.Width = Properties.Settings.Default.Width;
+
+            if (Properties.Settings.Default.Maximized)
+            {
+                WindowState = WindowState.Maximized;
+            }
         }
 
         private void saveCurrentWindowSize()
@@ -328,22 +466,33 @@ namespace LearningCards
             Properties.Settings.Default.Save();
         }
 
-        private void mnuPlayRandom_Click(object sender, RoutedEventArgs e)
+        private void setBackgoundColor()
         {
-            MenuItem myItem = (MenuItem)e.Source;
+            string[] csvColor = Properties.Settings.Default.BackgroundColor.Split(",".ToCharArray());
 
-            if (myItem.IsCheckable)
+            if(csvColor.Length != 4)
             {
-                Properties.Settings.Default.PlayRandom = myItem.IsChecked;
-                Properties.Settings.Default.Save();
+                MessageBox.Show("Invalid background color [argb]", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
-            e.Handled = true;
-        }
+            byte[] scvColorValues = new byte[4];
+            bool succeeded = byte.TryParse(csvColor[0], out scvColorValues[0]);
+            succeeded &= byte.TryParse(csvColor[1], out scvColorValues[1]);
+            succeeded &= byte.TryParse(csvColor[2], out scvColorValues[2]);
+            succeeded &= byte.TryParse(csvColor[3], out scvColorValues[3]);
 
-        private void mnuViewSettings_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(readSettings(), "Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+            if(!succeeded)
+            {
+                MessageBox.Show("Invalid background color [argb]", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            SolidColorBrush color = new SolidColorBrush(Color.FromArgb(scvColorValues[0], scvColorValues[1], scvColorValues[2], scvColorValues[3]));
+
+            grdMain.Background = color;
+            txtContent.Background = color;
+            txtContent.BorderBrush = color;
         }
 
         private string pluralS(int n)
@@ -389,60 +538,6 @@ namespace LearningCards
             return settings.ToString();
         }
 
-        private void mnuInterval_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem myItem = (MenuItem)e.Source;
-
-            switch (myItem.Name)
-            {
-                case "mnuInterval3s":
-                    Properties.Settings.Default.Interval = 3;
-                    break;
-                case "mnuInterval10s":
-                    Properties.Settings.Default.Interval = 10;
-                    break;
-                case "mnuInterval20s":
-                    Properties.Settings.Default.Interval = 20;
-                    break;
-                case "mnuInterval30s":
-                    Properties.Settings.Default.Interval = 30;
-                    break;
-                case "mnuInterval1":
-                    Properties.Settings.Default.Interval = 60;
-                    break;
-                case "mnuInterval3":
-                    Properties.Settings.Default.Interval = 180;
-                    break;
-                case "mnuInterval5":
-                    Properties.Settings.Default.Interval = 300;
-                    break;
-                case "mnuInterval10":
-                    Properties.Settings.Default.Interval = 600;
-                    break;
-                case "mnuInterval15":
-                    Properties.Settings.Default.Interval = 900;
-                    break;
-                case "mnuInterval30":
-                    Properties.Settings.Default.Interval = 1800;
-                    break;
-                case "mnuInterval60":
-                    Properties.Settings.Default.Interval = 3600;
-                    break;
-            }
-
-            Properties.Settings.Default.Save();
-
-            setTimer();
-            displayIntervalOnContextMenu();
-        }
-
-        private void mnuPausePlay_Click(object sender, RoutedEventArgs e)
-        {
-            string header = ((MenuItem)e.Source).Header.ToString();
-
-            pausePlay(header);
-        }
-
         private void pausePlay(string action)
         {
             switch (action.ToLower())
@@ -460,62 +555,9 @@ namespace LearningCards
             }
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void mnuImportCsvTemplate_Click(object sender, RoutedEventArgs e)
         {
-            if(this.PositionHistoryIndex == 0 || this.PositionHistory.Count <= 1)
-            {
-                return;
-            }
 
-            if (this.PositionHistoryIndex == -1)
-            {
-                this.PositionHistoryIndex = this.PositionHistory.Count - 2;
-            }
-            else
-            {
-                if (this.PositionHistoryIndex >= 1)
-                {
-                    this.PositionHistoryIndex--;
-                }
-            }
-
-            this.Position = this.PositionHistory.ElementAt(this.PositionHistoryIndex);
-
-            Model model = this.Models.ElementAt(this.Position);
-
-            displayModel(model);
-
-            refreshPositionControls();
-        }
-
-        private void btnForward_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.PositionHistoryIndex == -1 || this.PositionHistoryIndex == this.PositionHistory.Count - 1)
-            {
-                this.PositionHistoryIndex = -1;
-                return;
-            }
-
-            this.PositionHistoryIndex++;
-            this.Position = this.PositionHistory.ElementAt(PositionHistoryIndex);
-
-            Model model = this.Models.ElementAt(this.Position);
-
-            displayModel(model);
-
-            refreshPositionControls();
-        }
-
-        private void btnPause_Click(object sender, RoutedEventArgs e)
-        {
-            if (_Timer.IsEnabled)
-            {
-                pausePlay("pause");
-            }
-            else
-            {
-                pausePlay("play");
-            }
         }
     }
 }
