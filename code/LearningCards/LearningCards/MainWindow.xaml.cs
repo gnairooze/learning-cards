@@ -510,10 +510,14 @@ namespace LearningCards
             StringBuilder settings = new StringBuilder();
             settings.AppendLine($"Version: {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}");
             settings.AppendLine();
-            settings.AppendLine($"+ Verses file: {System.IO.Path.GetFullPath(Properties.Settings.Default.DataPath)}");
+            settings.AppendLine($"+ Data file: {System.IO.Path.GetFullPath(Properties.Settings.Default.DataPath)}");
             settings.AppendLine();
             settings.AppendLine($"+ Font-Size: {Properties.Settings.Default.FontSize}");
-            settings.AppendLine($"+ Play every {Properties.Settings.Default.Interval} minute{pluralS(Properties.Settings.Default.Interval)}");
+
+            int minutes = Properties.Settings.Default.Interval / 60;
+            int seconds = Properties.Settings.Default.Interval % 60;
+
+            settings.AppendLine($"+ Play every {minutes} minute{pluralS(minutes)}, {seconds} second{pluralS(seconds)}");
             if (Properties.Settings.Default.PlayRandom)
             {
                 settings.AppendLine("+ Play in random mode");
@@ -535,6 +539,9 @@ namespace LearningCards
                 settings.AppendLine("+ Window is not maximized");
             }
 
+
+            settings.AppendLine($"+ Background color (a,r,g,b): {Properties.Settings.Default.BackgroundColor}");
+
             return settings.ToString();
         }
 
@@ -553,11 +560,6 @@ namespace LearningCards
                     this.Title = TITLE;
                     break;
             }
-        }
-
-        private void mnuImportCsvTemplate_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

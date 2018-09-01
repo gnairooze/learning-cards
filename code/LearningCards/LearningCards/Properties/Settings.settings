@@ -30,7 +30,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="BackgroundColor" Type="System.String" Scope="User">
-      <Value Profile="(Default)">255, 255, 228, 196</Value>
+      <Value Profile="(Default)">255,255,228,196</Value>
     </Setting>
   </Settings>
 </SettingsFile>

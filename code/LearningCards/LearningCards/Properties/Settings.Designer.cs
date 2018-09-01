@@ -133,7 +133,7 @@ namespace LearningCards.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("255, 255, 228, 196")]
+        [global::System.Configuration.DefaultSettingValueAttribute("255,255,228,196")]
         public string BackgroundColor {
             get {
                 return ((string)(this["BackgroundColor"]));
