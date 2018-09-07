@@ -30,7 +30,8 @@ namespace LearningCards
                     continue;
                 }
 
-                string[] values = line.Split(",".ToCharArray());
+                string processedLine = processText(line);
+                string[] values = processedLine.Split(new string[] { "\",\"" }, StringSplitOptions.None);
 
                 if (values.Length != 5)
                 {
@@ -40,11 +41,11 @@ namespace LearningCards
 
                 models.Add(new Model()
                 {
-                    Content = processText(values[0]),
-                    Location = processText(values[1]),
-                    LTR = processText(values[3]).ToLower() == "ltr",
-                    URL = new Uri(processText(values[2])),
-                    ImageLocation = processText(values[4])
+                    Content = values[0],
+                    Location = values[1],
+                    LTR = values[3].ToLower() == "ltr",
+                    URL = new Uri(values[2]),
+                    ImageLocation = values[4]
                 });
 
                 isFirstLine = false;

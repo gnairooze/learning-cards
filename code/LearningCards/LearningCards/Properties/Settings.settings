@@ -6,13 +6,13 @@
       <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="FontSize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">36</Value>
+      <Value Profile="(Default)">24</Value>
     </Setting>
     <Setting Name="Top" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Left" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1000</Value>
+      <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="Height" Type="System.Double" Scope="User">
       <Value Profile="(Default)">800</Value>
@@ -30,7 +30,7 @@
       <Value Profile="(Default)">255,255,228,196</Value>
     </Setting>
     <Setting Name="DataPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.\Resources\data2.csv</Value>
+      <Value Profile="(Default)">.\Resources\sample-data.csv</Value>
     </Setting>
     <Setting Name="ContentAlign" Type="System.String" Scope="User">
       <Value Profile="(Default)">Left</Value>

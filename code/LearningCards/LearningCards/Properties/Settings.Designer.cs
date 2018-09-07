@@ -37,7 +37,7 @@ namespace LearningCards.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("36")]
+        [global::System.Configuration.DefaultSettingValueAttribute("24")]
         public int FontSize {
             get {
                 return ((int)(this["FontSize"]));
@@ -61,7 +61,7 @@ namespace LearningCards.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
         public double Left {
             get {
                 return ((double)(this["Left"]));
@@ -133,7 +133,7 @@ namespace LearningCards.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".\\Resources\\data2.csv")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\Resources\\sample-data.csv")]
         public string DataPath {
             get {
                 return ((string)(this["DataPath"]));
