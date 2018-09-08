@@ -14,6 +14,10 @@
 
 # Releases
 
+## 1.7.1
+
+1. Add icon to the app. Previously it was added to the window only
+
 ## 1.7
 
 1. Add icon to the app
