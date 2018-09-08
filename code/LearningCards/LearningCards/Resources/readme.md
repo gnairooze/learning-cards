@@ -14,7 +14,10 @@
 
 # Releases
 
+## 1.6
+
+1. Apply material design to UI
+
 ## 1.5
 
 1. Fix load csv file with comma in its content
-2. 
