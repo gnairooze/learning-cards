@@ -85,7 +85,6 @@
         <Grid x:Name="grdMain" Background="Bisque">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -95,24 +94,24 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image x:Name="imgMain" Stretch="None" HorizontalAlignment="Center" Margin="10,10,10,10" Grid.Row="1" Grid.ColumnSpan="4" Grid.ZIndex="1"/>
-            <TextBox x:Name="txtContent" Margin="10,10,10,10" Grid.Row="2" Grid.ColumnSpan="4" TextWrapping="Wrap" Text="TextBox" FontSize="36" TextAlignment="Center" IsReadOnly="True" FontFamily="Arial" Background="Bisque" BorderBrush="Bisque" BorderThickness="0" AcceptsReturn="True" />
-            <TextBlock x:Name="txtblkLinkContent" Grid.Row="3" Grid.ColumnSpan="4" FontSize="36" TextAlignment="Center" FontFamily="Arial" Margin="10,10,10,10">           
+            <Image x:Name="imgMain" Stretch="None" HorizontalAlignment="Center" Margin="10,10,10,10" Grid.Row="0" Grid.ColumnSpan="4" Grid.ZIndex="1"/>
+            <TextBox x:Name="txtContent" Margin="10,10,10,10" Grid.Row="1" Grid.ColumnSpan="4" TextWrapping="Wrap" Text="TextBox" FontSize="36" TextAlignment="Center" IsReadOnly="True" FontFamily="Arial" Background="Bisque" BorderBrush="Bisque" BorderThickness="0" AcceptsReturn="True" />
+            <TextBlock x:Name="txtblkLinkContent" Grid.Row="2" Grid.ColumnSpan="4" FontSize="36" TextAlignment="Center" FontFamily="Arial" Margin="10,10,10,10">           
             <Hyperlink x:Name="lnkLocation" NavigateUri="http://www.google.com" RequestNavigate="lnkLocation_RequestNavigate">
                 <Hyperlink.Inlines>
                     <Run x:Name="lnkContent" Text="Click here"/>
                 </Hyperlink.Inlines>
             </Hyperlink>
             </TextBlock>
-            <materialDesign:Chip x:Name="lblCardNo" HorizontalAlignment="Right" Grid.Column="2" Grid.ColumnSpan="2" Width="Auto" Margin="10,10,10,0">
+            <materialDesign:Chip x:Name="lblCardNo" Panel.ZIndex="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Width="Auto" Margin="10,0,10,-10">
             </materialDesign:Chip>
-            <Button x:Name="btnBack" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Click="btnBack_Click" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10,10,0,0">
+            <Button x:Name="btnBack" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Click="btnBack_Click" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Panel.ZIndex="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,-10">
                 <materialDesign:PackIcon Kind="StepBackward" />
             </Button>
-            <Button x:Name="btnForward" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Click="btnForward_Click"  Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="60,10,0,0">
+            <Button x:Name="btnForward" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Click="btnForward_Click"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Panel.ZIndex="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="60,0,0,-10">
                 <materialDesign:PackIcon Kind="StepForward" />
             </Button>
-            <Button x:Name="btnPause" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="btnPause_Click" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="120,10,0,0">
+            <Button x:Name="btnPause" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="btnPause_Click"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Panel.ZIndex="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="120,0,0,-10">
                 <materialDesign:PackIcon x:Name="cntntPause" Kind="Pause" />
             </Button>
         </Grid>

@@ -14,6 +14,10 @@
 
 # Releases
 
+## 1.8
+
+1. Change location of buttons and card no
+
 ## 1.7.1
 
 1. Add icon to the app. Previously it was added to the window only
