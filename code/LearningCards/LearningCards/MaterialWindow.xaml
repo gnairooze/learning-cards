@@ -15,67 +15,223 @@
                     <Setter Property="GroupName" Value="OptionGroup1" />
                     <Setter Property="IsHitTestVisible" Value="False" />
                 </Style>
+                <Style x:Key="Group2Style" TargetType="{x:Type RadioButton}">
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="GroupName" Value="OptionGroup2" />
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                </Style>
+                <Style x:Key="Group3Style" TargetType="{x:Type RadioButton}">
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="GroupName" Value="OptionGroup3" />
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                </Style>
+                <Style x:Key="Group4Style" TargetType="{x:Type RadioButton}">
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="GroupName" Value="OptionGroup4" />
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                </Style>
             </ContextMenu.Resources>
-
-            <MenuItem x:Name="mnuFontIncrease" Header="Font+" Click="mnuFontIncrease_Click" />
-            <MenuItem x:Name="mnuFontDecrease" Header="Font-" Click="mnuFontDecrease_Click" />
+            <MenuItem Header="Set font size">
+                <MenuItem x:Name="mnuFont8" Header="8" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont8" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont10" Header="10" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont10" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont12" Header="12" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont12" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont14" Header="14" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont14" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont16" Header="16" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont16" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont18" Header="18" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont18" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont20" Header="20" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont20" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont22" Header="22" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont22" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont24" Header="24" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont24" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont26" Header="26" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont26" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont28" Header="28" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont28" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont30" Header="30" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont30" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont32" Header="32" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont32" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont34" Header="34" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont34" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont36" Header="36" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont36" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont38" Header="38" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont38" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont40" Header="40" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont40" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
             <Separator/>
             <MenuItem x:Name="mnuPlayRandom" Header="Random" IsCheckable="True" Click="mnuPlayRandom_Click" />
             <Separator/>
-            <MenuItem x:Name="mnuInterval3s" Header="Play every 3 seconds" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval3s" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
+            <MenuItem Header="Play every ...">
+                <MenuItem x:Name="mnuInterval3s" Header="3 seconds" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval3s" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval10s" Header="10 seconds" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval10s" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval20s" Header="20 seconds" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval20s" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval30s" Header="30 seconds" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval30s" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval1" Header="1 minute" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval1" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval3" Header="3 minutes" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval3" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval5" Header="5 minutes" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval5" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval10" Header="10 minutes" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval10" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval15" Header="15 minutes" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval15" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval30" Header="30 minutes" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval30" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuInterval60" Header="60 minutes" Click="mnuInterval_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioInterval60" Style="{StaticResource Group1Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
-            <MenuItem x:Name="mnuInterval10s" Header="Play every 10 seconds" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval10s" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
+            <Separator/>
+            <MenuItem x:Name="mnuImportCSV" Header="Import CSV File" Click="mnuImportCSV_Click" />
+            <Separator/>
+            <MenuItem Header="Align Content ...">
+                <MenuItem x:Name="mnuAlignContentLeft" Click="mnuAlignContent_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioAlignContentLeft" Style="{StaticResource Group3Style}" />
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <materialDesign:PackIcon Kind="FormatAlignLeft" />
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem x:Name="mnuAlignContentCenter" Click="mnuAlignContent_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioAlignContentCenter" Style="{StaticResource Group3Style}"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <materialDesign:PackIcon Kind="FormatAlignCenter" />
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem x:Name="mnuAlignContentRight" Click="mnuAlignContent_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioAlignContentRight" Style="{StaticResource Group3Style}"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <materialDesign:PackIcon Kind="FormatAlignRight" />
+                    </MenuItem.Header>
+                </MenuItem>
             </MenuItem>
-            <MenuItem x:Name="mnuInterval20s" Header="Play every 20 seconds" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval20s" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="mnuInterval30s" Header="Play every 30 seconds" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval30s" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="mnuInterval1" Header="Play every 1 minute" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval1" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="mnuInterval3" Header="Play every 3 minutes" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval3" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="mnuInterval5" Header="Play every 5 minutes" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval5" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="mnuInterval10" Header="Play every 10 minutes" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval10" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="mnuInterval15" Header="Play every 15 minutes" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval15" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="mnuInterval30" Header="Play every 30 minutes" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval30" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="mnuInterval60" Header="Play every 60 minutes" Click="mnuInterval_Click">
-                <MenuItem.Icon>
-                    <RadioButton x:Name="radioInterval60" Style="{StaticResource Group1Style}"/>
-                </MenuItem.Icon>
+            <MenuItem Header="Align Location ...">
+                <MenuItem x:Name="mnuAlignLocationLeft" Click="mnuAlignLocation_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioAlignLocationLeft" Style="{StaticResource Group4Style}"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <materialDesign:PackIcon Kind="FormatAlignLeft" />
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem x:Name="mnuAlignLocationCenter" Click="mnuAlignLocation_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioAlignLocationCenter" Style="{StaticResource Group4Style}"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <materialDesign:PackIcon Kind="FormatAlignCenter" />
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem x:Name="mnuAlignLocationRight" Click="mnuAlignLocation_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioAlignLocationRight" Style="{StaticResource Group4Style}"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Header>
+                        <materialDesign:PackIcon Kind="FormatAlignRight" />
+                    </MenuItem.Header>
+                </MenuItem>
             </MenuItem>
             <Separator/>
             <MenuItem x:Name="mnuViewSettings" Header="View Settings" Click="mnuViewSettings_Click" />

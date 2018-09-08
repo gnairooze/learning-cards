@@ -14,6 +14,14 @@
 
 # Releases
 
+## 1.9
+
+1. add import from csv file function
+2. move interval setting to submenu
+3. change font increase and decrease to submenu
+4. set alignment from context menu
+5. add alignment in view settings message
+
 ## 1.8
 
 1. Change location of buttons and card no

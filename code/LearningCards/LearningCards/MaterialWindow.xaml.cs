@@ -77,44 +77,64 @@ namespace LearningCards
         #region window event handlers
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Model> models; string message;
             _Timer.Tick += new EventHandler(Timer_Tick);
-            this.Position = -1;
-            this.PositionHistoryIndex = -1;
-            btnForward.IsEnabled = false;
-            btnBack.IsEnabled = false;
+           
             setBackgoundColor();
             setWindowSize();
 
-            bool loadedSuccessfully = Data.LoadData(Properties.Settings.Default.DataPath, true, out models, out message);
-
-            if (!loadedSuccessfully)
+            bool succeeded = loadData(Properties.Settings.Default.DataPath);
+            if(!succeeded)
             {
-                MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-            if (models.Count == 0)
-            {
-                MessageBox.Show("no content found", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            this._Models = models;
 
             setFontSize(Properties.Settings.Default.FontSize);
             mnuPlayRandom.IsChecked = Properties.Settings.Default.PlayRandom;
 
             displayIntervalOnContextMenu();
+            displayFontSizeOnContextMenu();
+            displayAlignContentOnContextMenu();
+            displayAlignLocationOnContextMenu();
 
             setTimer();
 
-            setAlignment();
+            setContentAlignment();
+            setLocationAlignment();
+
             displayModel(getModel());
             _Timer.Start();
         }
 
-        private void setAlignment()
+        private bool loadData(string dataPath)
+        {
+            List<Model> models; string message;
+
+            bool loadedSuccessfully = Data.LoadData(dataPath, true, out models, out message);
+
+            if (!loadedSuccessfully)
+            {
+                MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            if (models.Count == 0)
+            {
+                MessageBox.Show("no content found", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            this._Models = models;
+
+            this.Position = -1;
+            this.PositionHistoryIndex = -1;
+            btnForward.IsEnabled = false;
+            btnBack.IsEnabled = false;
+            this.PositionHistory.Clear();
+
+            return true;
+        }
+
+        private void setContentAlignment()
         {
             switch (Properties.Settings.Default.ContentAlign.ToLower())
             {
@@ -128,7 +148,10 @@ namespace LearningCards
                     txtContent.TextAlignment = TextAlignment.Center;
                     break;
             }
+        }
 
+        private void setLocationAlignment()
+        {
             switch (Properties.Settings.Default.LocationAlign.ToLower())
             {
                 case "left":
@@ -277,6 +300,20 @@ namespace LearningCards
             displayModel(model);
 
             refreshPositionControls();
+        }
+        #endregion
+
+        #region import export handlers
+        private void mnuImportCSV_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                System.IO.File.Copy(openFileDialog.FileName, Properties.Settings.Default.DataPath, true);
+
+                loadData(Properties.Settings.Default.DataPath);
+            }
         }
         #endregion
 
@@ -564,6 +601,8 @@ namespace LearningCards
                 settings.AppendLine("+ Window is not maximized");
             }
 
+            settings.AppendLine($"+ Conetnt is aligned to {Properties.Settings.Default.ContentAlign}");
+            settings.AppendLine($"+ Location is aligned to {Properties.Settings.Default.LocationAlign}");
 
             settings.AppendLine($"+ Background color (a,r,g,b): {Properties.Settings.Default.BackgroundColor}");
 
@@ -585,6 +624,265 @@ namespace LearningCards
                     this.Title = TITLE;
                     break;
             }
+        }
+
+        private void uncheckFontSize()
+        {
+            radioFont8.IsChecked = false;
+            radioFont10.IsChecked = false;
+            radioFont12.IsChecked = false;
+            radioFont14.IsChecked = false;
+            radioFont16.IsChecked = false;
+            radioFont18.IsChecked = false;
+            radioFont20.IsChecked = false;
+            radioFont22.IsChecked = false;
+            radioFont24.IsChecked = false;
+            radioFont26.IsChecked = false;
+            radioFont28.IsChecked = false;
+            radioFont30.IsChecked = false;
+            radioFont32.IsChecked = false;
+            radioFont34.IsChecked = false;
+            radioFont36.IsChecked = false;
+            radioFont38.IsChecked = false;
+            radioFont40.IsChecked = false;
+        }
+
+        private void displayFontSizeOnContextMenu()
+        {
+            switch (Properties.Settings.Default.FontSize)
+            {
+                case 8:
+                    uncheckFontSize();
+                    radioFont8.IsChecked = true;
+                    break;
+                case 10:
+                    uncheckFontSize();
+                    radioFont10.IsChecked = true;
+                    break;
+                case 12:
+                    uncheckFontSize();
+                    radioFont12.IsChecked = true;
+                    break;
+                case 14:
+                    uncheckFontSize();
+                    radioFont14.IsChecked = true;
+                    break;
+                case 16:
+                    uncheckFontSize();
+                    radioFont16.IsChecked = true;
+                    break;
+                case 18:
+                    uncheckFontSize();
+                    radioFont18.IsChecked = true;
+                    break;
+                case 20:
+                    uncheckFontSize();
+                    radioFont20.IsChecked = true;
+                    break;
+                case 22:
+                    uncheckFontSize();
+                    radioFont22.IsChecked = true;
+                    break;
+                case 24:
+                    uncheckFontSize();
+                    radioFont24.IsChecked = true;
+                    break;
+                case 26:
+                    uncheckFontSize();
+                    radioFont26.IsChecked = true;
+                    break;
+                case 28:
+                    uncheckFontSize();
+                    radioFont28.IsChecked = true;
+                    break;
+                case 30:
+                    uncheckFontSize();
+                    radioFont30.IsChecked = true;
+                    break;
+                case 32:
+                    uncheckFontSize();
+                    radioFont32.IsChecked = true;
+                    break;
+                case 34:
+                    uncheckFontSize();
+                    radioFont34.IsChecked = true;
+                    break;
+                case 36:
+                    uncheckFontSize();
+                    radioFont36.IsChecked = true;
+                    break;
+                case 38:
+                    uncheckFontSize();
+                    radioFont38.IsChecked = true;
+                    break;
+                case 40:
+                    uncheckFontSize();
+                    radioFont40.IsChecked = true;
+                    break;
+            }
+        }
+
+        private void mnuSetFontSize_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            switch (myItem.Name)
+            {
+                case "mnuFont8":
+                    Properties.Settings.Default.FontSize = 8;
+                    break;
+                case "mnuFont10":
+                    Properties.Settings.Default.FontSize = 10;
+                    break;
+                case "mnuFont12":
+                    Properties.Settings.Default.FontSize = 12;
+                    break;
+                case "mnuFont14":
+                    Properties.Settings.Default.FontSize = 14;
+                    break;
+                case "mnuFont16":
+                    Properties.Settings.Default.FontSize = 16;
+                    break;
+                case "mnuFont18":
+                    Properties.Settings.Default.FontSize = 18;
+                    break;
+                case "mnuFont20":
+                    Properties.Settings.Default.FontSize = 20;
+                    break;
+                case "mnuFont22":
+                    Properties.Settings.Default.FontSize = 22;
+                    break;
+                case "mnuFont24":
+                    Properties.Settings.Default.FontSize = 24;
+                    break;
+                case "mnuFont26":
+                    Properties.Settings.Default.FontSize = 26;
+                    break;
+                case "mnuFont28":
+                    Properties.Settings.Default.FontSize = 28;
+                    break;
+                case "mnuFont30":
+                    Properties.Settings.Default.FontSize = 30;
+                    break;
+                case "mnuFont32":
+                    Properties.Settings.Default.FontSize = 32;
+                    break;
+                case "mnuFont34":
+                    Properties.Settings.Default.FontSize = 34;
+                    break;
+                case "mnuFont36":
+                    Properties.Settings.Default.FontSize = 36;
+                    break;
+                case "mnuFont38":
+                    Properties.Settings.Default.FontSize = 38;
+                    break;
+                case "mnuFont40":
+                    Properties.Settings.Default.FontSize = 40;
+                    break;
+            }
+
+            Properties.Settings.Default.Save();
+
+            displayFontSizeOnContextMenu();
+            setFontSize(Properties.Settings.Default.FontSize);
+        }
+
+        private void uncheckContentAlign()
+        {
+            radioAlignContentLeft.IsChecked = false;
+            radioAlignContentCenter.IsChecked = false;
+            radioAlignContentRight.IsChecked = false;
+        }
+
+        private void uncheckLocationAlign()
+        {
+            radioAlignLocationLeft.IsChecked = false;
+            radioAlignLocationCenter.IsChecked = false;
+            radioAlignLocationRight.IsChecked = false;
+        }
+
+        private void displayAlignContentOnContextMenu()
+        {
+            switch (Properties.Settings.Default.ContentAlign.ToLower())
+            {
+                case "left":
+                    uncheckContentAlign();
+                    radioAlignContentLeft.IsChecked = true;
+                    break;
+                case "center":
+                    uncheckContentAlign();
+                    radioAlignContentCenter.IsChecked = true;
+                    break;
+                case "right":
+                    uncheckContentAlign();
+                    radioAlignContentRight.IsChecked = true;
+                    break;
+            }
+        }
+
+        private void displayAlignLocationOnContextMenu()
+        {
+            switch (Properties.Settings.Default.LocationAlign.ToLower())
+            {
+                case "left":
+                    uncheckLocationAlign();
+                    radioAlignLocationLeft.IsChecked = true;
+                    break;
+                case "center":
+                    uncheckLocationAlign();
+                    radioAlignLocationCenter.IsChecked = true;
+                    break;
+                case "right":
+                    uncheckLocationAlign();
+                    radioAlignLocationRight.IsChecked = true;
+                    break;
+            }
+        }
+
+        private void mnuAlignContent_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            switch (myItem.Name)
+            {
+                case "mnuAlignContentLeft":
+                    Properties.Settings.Default.ContentAlign = "Left";
+                    break;
+                case "mnuAlignContentCenter":
+                    Properties.Settings.Default.ContentAlign = "Center";
+                    break;
+                case "mnuAlignContentRight":
+                    Properties.Settings.Default.ContentAlign = "Right";
+                    break;
+            }
+
+            Properties.Settings.Default.Save();
+
+            displayAlignContentOnContextMenu();
+            setContentAlignment();
+        }
+
+        private void mnuAlignLocation_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            switch (myItem.Name)
+            {
+                case "mnuAlignLocationLeft":
+                    Properties.Settings.Default.LocationAlign = "Left";
+                    break;
+                case "mnuAlignLocationCenter":
+                    Properties.Settings.Default.LocationAlign = "Center";
+                    break;
+                case "mnuAlignLocationRight":
+                    Properties.Settings.Default.LocationAlign = "Right";
+                    break;
+            }
+
+            Properties.Settings.Default.Save();
+
+            displayAlignLocationOnContextMenu();
+            setLocationAlignment();
         }
     }
 }
