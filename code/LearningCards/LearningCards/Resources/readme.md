@@ -14,6 +14,10 @@
 
 # Releases
 
+## 1.7
+
+1. Add icon to the app
+
 ## 1.6
 
 1. Apply material design to UI

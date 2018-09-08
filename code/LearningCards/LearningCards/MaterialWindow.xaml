@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LearningCards"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Learning Cards" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="Learning Cards" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing" Icon=".\Resources\LearningCards.ico">
     <Window.ContextMenu>
         <ContextMenu>
             <ContextMenu.Resources>
