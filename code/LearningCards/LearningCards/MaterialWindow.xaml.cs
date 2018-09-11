@@ -601,7 +601,7 @@ namespace LearningCards
                 settings.AppendLine("+ Window is not maximized");
             }
 
-            settings.AppendLine($"+ Conetnt is aligned to {Properties.Settings.Default.ContentAlign}");
+            settings.AppendLine($"+ Content is aligned to {Properties.Settings.Default.ContentAlign}");
             settings.AppendLine($"+ Location is aligned to {Properties.Settings.Default.LocationAlign}");
 
             settings.AppendLine($"+ Background color (a,r,g,b): {Properties.Settings.Default.BackgroundColor}");

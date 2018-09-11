@@ -14,13 +14,17 @@
 
 # Releases
 
+## 1.9.1
+
+1. Fix setings contents spelling mistakes
+
 ## 1.9
 
-1. add import from csv file function
-2. move interval setting to submenu
-3. change font increase and decrease to submenu
-4. set alignment from context menu
-5. add alignment in view settings message
+1. Add import from csv file function
+2. Move interval setting to submenu
+3. Change font increase and decrease to submenu
+4. Set alignment from context menu
+5. Sdd alignment in view settings message
 
 ## 1.8
 
