@@ -28,8 +28,6 @@ namespace LearningCards
         }
 
         #region attributes
-        private const string TITLE = "Learning Cards";
-
         private List<Model> _Models;
         private DispatcherTimer _Timer = new DispatcherTimer();
         private Random _Random = new Random();
@@ -108,6 +106,7 @@ namespace LearningCards
         private bool loadData(string dataPath)
         {
             List<Model> models; string message;
+            this.Title = Properties.Settings.Default.Title;
 
             bool loadedSuccessfully = Data.LoadData(dataPath, true, out models, out message);
 
@@ -621,7 +620,7 @@ namespace LearningCards
                 case "play":
                     _Timer.Start();
                     this.cntntPause.Kind = MaterialDesignThemes.Wpf.PackIconKind.Pause;
-                    this.Title = TITLE;
+                    this.Title = Properties.Settings.Default.Title;
                     break;
             }
         }

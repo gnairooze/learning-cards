@@ -166,5 +166,17 @@ namespace LearningCards.Properties {
                 this["LocationAlign"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Learning Cards")]
+        public string Title {
+            get {
+                return ((string)(this["Title"]));
+            }
+            set {
+                this["Title"] = value;
+            }
+        }
     }
 }

@@ -101,21 +101,21 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\readme.md">
+    <None Include="readme.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\sample-data.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Resource Include="Resources\simpbdo.ttf">
+    <None Include="Fonts\simpbdo.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\simpfxo.ttf">
+    </None>
+    <None Include="Fonts\simpfxo.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\simpo.ttf">
+    </None>
+    <None Include="Fonts\simpo.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -123,17 +123,20 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\image.png">
+    <None Include="Resources\image.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\image.jpg">
+    <None Include="Resources\image.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\LearningCards.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Backup\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

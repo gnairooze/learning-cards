@@ -14,6 +14,12 @@
 
 # Releases
 
+## 1.10
+
+1. Read the window title from the config file
+2. Move fonts the fonts folder
+3. Move readme file to the root folder
+
 ## 1.9.1
 
 1. Fix setings contents spelling mistakes
