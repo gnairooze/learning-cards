@@ -2,6 +2,7 @@
 
 1. This app depends on .net framework 4.6.1
 2. In its config, you can set the following:
+
 2.1. The location of the data file
 2.2. The interval in minutes between each record
 2.3. Play records in random order or standard order
