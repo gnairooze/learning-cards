@@ -181,6 +181,8 @@
             <Separator/>
             <MenuItem x:Name="mnuImportCSV" Header="Import CSV File" Click="mnuImportCSV_Click" />
             <Separator/>
+            <MenuItem x:Name="mnuAlwaysOnTop" Header="Always on top" IsCheckable="True" Click="mnuAlwaysOnTop_Click" />
+            <Separator/>
             <MenuItem Header="Align Content ...">
                 <MenuItem x:Name="mnuAlignContentLeft" Click="mnuAlignContent_Click">
                     <MenuItem.Icon>

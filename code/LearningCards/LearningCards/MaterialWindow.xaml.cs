@@ -98,6 +98,7 @@ namespace LearningCards
 
             setContentAlignment();
             setLocationAlignment();
+            setAlwaysOnTop();
 
             displayModel(getModel());
             _Timer.Start();
@@ -201,6 +202,21 @@ namespace LearningCards
             e.Handled = true;
         }
 
+        private void mnuAlwaysOnTop_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            if (myItem.IsCheckable)
+            {
+                Properties.Settings.Default.AlwaysOnTop = myItem.IsChecked;
+                Properties.Settings.Default.Save();
+
+                setAlwaysOnTop();
+            }
+
+            e.Handled = true;
+        }
+
         private void mnuInterval_Click(object sender, RoutedEventArgs e)
         {
             MenuItem myItem = (MenuItem)e.Source;
@@ -251,6 +267,117 @@ namespace LearningCards
         private void mnuViewSettings_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(readSettings(), "Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void mnuSetFontSize_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            switch (myItem.Name)
+            {
+                case "mnuFont8":
+                    Properties.Settings.Default.FontSize = 8;
+                    break;
+                case "mnuFont10":
+                    Properties.Settings.Default.FontSize = 10;
+                    break;
+                case "mnuFont12":
+                    Properties.Settings.Default.FontSize = 12;
+                    break;
+                case "mnuFont14":
+                    Properties.Settings.Default.FontSize = 14;
+                    break;
+                case "mnuFont16":
+                    Properties.Settings.Default.FontSize = 16;
+                    break;
+                case "mnuFont18":
+                    Properties.Settings.Default.FontSize = 18;
+                    break;
+                case "mnuFont20":
+                    Properties.Settings.Default.FontSize = 20;
+                    break;
+                case "mnuFont22":
+                    Properties.Settings.Default.FontSize = 22;
+                    break;
+                case "mnuFont24":
+                    Properties.Settings.Default.FontSize = 24;
+                    break;
+                case "mnuFont26":
+                    Properties.Settings.Default.FontSize = 26;
+                    break;
+                case "mnuFont28":
+                    Properties.Settings.Default.FontSize = 28;
+                    break;
+                case "mnuFont30":
+                    Properties.Settings.Default.FontSize = 30;
+                    break;
+                case "mnuFont32":
+                    Properties.Settings.Default.FontSize = 32;
+                    break;
+                case "mnuFont34":
+                    Properties.Settings.Default.FontSize = 34;
+                    break;
+                case "mnuFont36":
+                    Properties.Settings.Default.FontSize = 36;
+                    break;
+                case "mnuFont38":
+                    Properties.Settings.Default.FontSize = 38;
+                    break;
+                case "mnuFont40":
+                    Properties.Settings.Default.FontSize = 40;
+                    break;
+            }
+
+            Properties.Settings.Default.Save();
+
+            displayFontSizeOnContextMenu();
+            setFontSize(Properties.Settings.Default.FontSize);
+        }
+
+        private void mnuAlignContent_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            switch (myItem.Name)
+            {
+                case "mnuAlignContentLeft":
+                    Properties.Settings.Default.ContentAlign = "Left";
+                    break;
+                case "mnuAlignContentCenter":
+                    Properties.Settings.Default.ContentAlign = "Center";
+                    break;
+                case "mnuAlignContentRight":
+                    Properties.Settings.Default.ContentAlign = "Right";
+                    break;
+            }
+
+            Properties.Settings.Default.Save();
+
+            displayAlignContentOnContextMenu();
+            setContentAlignment();
+        }
+
+        private void mnuAlignLocation_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            switch (myItem.Name)
+            {
+                case "mnuAlignLocationLeft":
+                    Properties.Settings.Default.LocationAlign = "Left";
+                    break;
+                case "mnuAlignLocationCenter":
+                    Properties.Settings.Default.LocationAlign = "Center";
+                    break;
+                case "mnuAlignLocationRight":
+                    Properties.Settings.Default.LocationAlign = "Right";
+                    break;
+            }
+
+            Properties.Settings.Default.Save();
+
+            displayAlignLocationOnContextMenu();
+            setLocationAlignment();
         }
         #endregion
 
@@ -350,6 +477,11 @@ namespace LearningCards
             }
         }
         #endregion
+
+        private void setAlwaysOnTop()
+        {
+            this.Topmost = Properties.Settings.Default.AlwaysOnTop;
+        }
 
         private void refreshPositionControls()
         {
@@ -600,6 +732,15 @@ namespace LearningCards
                 settings.AppendLine("+ Window is not maximized");
             }
 
+            if (Properties.Settings.Default.AlwaysOnTop)
+            {
+                settings.AppendLine("+ Always on top is active");
+            }
+            else
+            {
+                settings.AppendLine("+ Always on top is not active");
+            }
+
             settings.AppendLine($"+ Content is aligned to {Properties.Settings.Default.ContentAlign}");
             settings.AppendLine($"+ Location is aligned to {Properties.Settings.Default.LocationAlign}");
 
@@ -721,71 +862,6 @@ namespace LearningCards
             }
         }
 
-        private void mnuSetFontSize_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem myItem = (MenuItem)e.Source;
-
-            switch (myItem.Name)
-            {
-                case "mnuFont8":
-                    Properties.Settings.Default.FontSize = 8;
-                    break;
-                case "mnuFont10":
-                    Properties.Settings.Default.FontSize = 10;
-                    break;
-                case "mnuFont12":
-                    Properties.Settings.Default.FontSize = 12;
-                    break;
-                case "mnuFont14":
-                    Properties.Settings.Default.FontSize = 14;
-                    break;
-                case "mnuFont16":
-                    Properties.Settings.Default.FontSize = 16;
-                    break;
-                case "mnuFont18":
-                    Properties.Settings.Default.FontSize = 18;
-                    break;
-                case "mnuFont20":
-                    Properties.Settings.Default.FontSize = 20;
-                    break;
-                case "mnuFont22":
-                    Properties.Settings.Default.FontSize = 22;
-                    break;
-                case "mnuFont24":
-                    Properties.Settings.Default.FontSize = 24;
-                    break;
-                case "mnuFont26":
-                    Properties.Settings.Default.FontSize = 26;
-                    break;
-                case "mnuFont28":
-                    Properties.Settings.Default.FontSize = 28;
-                    break;
-                case "mnuFont30":
-                    Properties.Settings.Default.FontSize = 30;
-                    break;
-                case "mnuFont32":
-                    Properties.Settings.Default.FontSize = 32;
-                    break;
-                case "mnuFont34":
-                    Properties.Settings.Default.FontSize = 34;
-                    break;
-                case "mnuFont36":
-                    Properties.Settings.Default.FontSize = 36;
-                    break;
-                case "mnuFont38":
-                    Properties.Settings.Default.FontSize = 38;
-                    break;
-                case "mnuFont40":
-                    Properties.Settings.Default.FontSize = 40;
-                    break;
-            }
-
-            Properties.Settings.Default.Save();
-
-            displayFontSizeOnContextMenu();
-            setFontSize(Properties.Settings.Default.FontSize);
-        }
-
         private void uncheckContentAlign()
         {
             radioAlignContentLeft.IsChecked = false;
@@ -836,52 +912,6 @@ namespace LearningCards
                     radioAlignLocationRight.IsChecked = true;
                     break;
             }
-        }
-
-        private void mnuAlignContent_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem myItem = (MenuItem)e.Source;
-
-            switch (myItem.Name)
-            {
-                case "mnuAlignContentLeft":
-                    Properties.Settings.Default.ContentAlign = "Left";
-                    break;
-                case "mnuAlignContentCenter":
-                    Properties.Settings.Default.ContentAlign = "Center";
-                    break;
-                case "mnuAlignContentRight":
-                    Properties.Settings.Default.ContentAlign = "Right";
-                    break;
-            }
-
-            Properties.Settings.Default.Save();
-
-            displayAlignContentOnContextMenu();
-            setContentAlignment();
-        }
-
-        private void mnuAlignLocation_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem myItem = (MenuItem)e.Source;
-
-            switch (myItem.Name)
-            {
-                case "mnuAlignLocationLeft":
-                    Properties.Settings.Default.LocationAlign = "Left";
-                    break;
-                case "mnuAlignLocationCenter":
-                    Properties.Settings.Default.LocationAlign = "Center";
-                    break;
-                case "mnuAlignLocationRight":
-                    Properties.Settings.Default.LocationAlign = "Right";
-                    break;
-            }
-
-            Properties.Settings.Default.Save();
-
-            displayAlignLocationOnContextMenu();
-            setLocationAlignment();
         }
     }
 }
