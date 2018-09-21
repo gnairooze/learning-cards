@@ -16,6 +16,10 @@
 
 # Releases
 
+## 1.12
+
+1. Add Fullscreen
+2. Add more font sizes in set font size
 
 ## 1.11
 

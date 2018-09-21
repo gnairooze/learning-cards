@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LearningCards"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Learning Cards" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing" Icon=".\Resources\LearningCards.ico">
+        Title="Learning Cards" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing" Icon=".\Resources\LearningCards.ico" KeyDown="Window_KeyDown">
     <Window.ContextMenu>
         <ContextMenu>
             <ContextMenu.Resources>
@@ -117,6 +117,16 @@
                         <RadioButton x:Name="radioFont40" Style="{StaticResource Group2Style}"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem x:Name="mnuFont80" Header="80" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont80" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="mnuFont120" Header="120" Click="mnuSetFontSize_Click">
+                    <MenuItem.Icon>
+                        <RadioButton x:Name="radioFont120" Style="{StaticResource Group2Style}"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <Separator/>
             <MenuItem x:Name="mnuPlayRandom" Header="Random" IsCheckable="True" Click="mnuPlayRandom_Click" />
@@ -182,6 +192,7 @@
             <MenuItem x:Name="mnuImportCSV" Header="Import CSV File" Click="mnuImportCSV_Click" />
             <Separator/>
             <MenuItem x:Name="mnuAlwaysOnTop" Header="Always on top" IsCheckable="True" Click="mnuAlwaysOnTop_Click" />
+            <MenuItem x:Name="mnuFullscreen" Header="Fullscreen" IsCheckable="True" Click="mnuFullscreen_Click" />
             <Separator/>
             <MenuItem Header="Align Content ...">
                 <MenuItem x:Name="mnuAlignContentLeft" Click="mnuAlignContent_Click">

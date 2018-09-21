@@ -75,33 +75,54 @@ namespace LearningCards
         #region window event handlers
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _Timer.Tick += new EventHandler(Timer_Tick);
-           
-            setBackgoundColor();
-            setWindowSize();
-
             bool succeeded = loadData(Properties.Settings.Default.DataPath);
             if(!succeeded)
             {
                 return;
             }
 
-            setFontSize(Properties.Settings.Default.FontSize);
-            mnuPlayRandom.IsChecked = Properties.Settings.Default.PlayRandom;
+            setEventHandlers();
 
-            displayIntervalOnContextMenu();
-            displayFontSizeOnContextMenu();
-            displayAlignContentOnContextMenu();
-            displayAlignLocationOnContextMenu();
+            setContextMenu();
 
+            resetControls();
+           
             setTimer();
 
+            start();
+        }
+
+        private void start()
+        {
+            displayModel(getModel());
+            _Timer.Start();
+        }
+
+        private void setEventHandlers()
+        {
+            _Timer.Tick += new EventHandler(Timer_Tick);
+        }
+
+        private void resetControls()
+        {
+            setBackgoundColor();
+            setWindowSize();
+            setFontSize(Properties.Settings.Default.FontSize);
             setContentAlignment();
             setLocationAlignment();
             setAlwaysOnTop();
+            setFullscreen(Properties.Settings.Default.Fullscreen);
+        }
 
-            displayModel(getModel());
-            _Timer.Start();
+        private void setContextMenu()
+        {
+            displayFontSizeOnContextMenu();
+            displayPlayRandomOnContextMenu();
+            displayIntervalOnContextMenu();
+            displayAlwaysOnTopOnContextMenu();
+            displayFullscreenOnContextMenu();
+            displayAlignContentOnContextMenu();
+            displayAlignLocationOnContextMenu();
         }
 
         private bool loadData(string dataPath)
@@ -170,25 +191,23 @@ namespace LearningCards
         {
             saveCurrentWindowSize();
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Escape)
+            {
+                if (Properties.Settings.Default.Fullscreen)
+                {
+                    setFullscreen(false);
+                    displayFullscreenOnContextMenu();
+                }
+            }
+
+            e.Handled = true;
+        }
         #endregion
 
         #region context menu event handlers
-        private void mnuFontIncrease_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.FontSize += 2;
-            Properties.Settings.Default.Save();
-
-            setFontSize(Properties.Settings.Default.FontSize);
-        }
-
-        private void mnuFontDecrease_Click(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.FontSize -= 2;
-            Properties.Settings.Default.Save();
-
-            setFontSize(Properties.Settings.Default.FontSize);
-        }
-
         private void mnuPlayRandom_Click(object sender, RoutedEventArgs e)
         {
             MenuItem myItem = (MenuItem)e.Source;
@@ -212,6 +231,21 @@ namespace LearningCards
                 Properties.Settings.Default.Save();
 
                 setAlwaysOnTop();
+            }
+
+            e.Handled = true;
+        }
+
+        private void mnuFullscreen_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem myItem = (MenuItem)e.Source;
+
+            if (myItem.IsCheckable)
+            {
+                Properties.Settings.Default.Fullscreen = myItem.IsChecked;
+                Properties.Settings.Default.Save();
+
+                setFullscreen(myItem.IsChecked);
             }
 
             e.Handled = true;
@@ -326,6 +360,12 @@ namespace LearningCards
                 case "mnuFont40":
                     Properties.Settings.Default.FontSize = 40;
                     break;
+                case "mnuFont80":
+                    Properties.Settings.Default.FontSize = 80;
+                    break;
+                case "mnuFont120":
+                    Properties.Settings.Default.FontSize = 120;
+                    break;
             }
 
             Properties.Settings.Default.Save();
@@ -378,6 +418,243 @@ namespace LearningCards
 
             displayAlignLocationOnContextMenu();
             setLocationAlignment();
+        }
+
+        private void displayIntervalOnContextMenu()
+        {
+            switch (Properties.Settings.Default.Interval)
+            {
+                case 3:
+                    uncheckIntervals();
+                    radioInterval3s.IsChecked = true;
+                    break;
+                case 10:
+                    uncheckIntervals();
+                    radioInterval10s.IsChecked = true;
+                    break;
+                case 20:
+                    uncheckIntervals();
+                    radioInterval20s.IsChecked = true;
+                    break;
+                case 30:
+                    uncheckIntervals();
+                    radioInterval30s.IsChecked = true;
+                    break;
+                case 60:
+                    uncheckIntervals();
+                    radioInterval1.IsChecked = true;
+                    break;
+                case 180:
+                    uncheckIntervals();
+                    radioInterval3.IsChecked = true;
+                    break;
+                case 300:
+                    uncheckIntervals();
+                    radioInterval5.IsChecked = true;
+                    break;
+                case 600:
+                    uncheckIntervals();
+                    radioInterval10.IsChecked = true;
+                    break;
+                case 900:
+                    uncheckIntervals();
+                    radioInterval15.IsChecked = true;
+                    break;
+                case 1800:
+                    uncheckIntervals();
+                    radioInterval30.IsChecked = true;
+                    break;
+                case 3600:
+                    uncheckIntervals();
+                    radioInterval60.IsChecked = true;
+                    break;
+            }
+        }
+
+        private void displayFontSizeOnContextMenu()
+        {
+            switch (Properties.Settings.Default.FontSize)
+            {
+                case 8:
+                    uncheckFontSize();
+                    radioFont8.IsChecked = true;
+                    break;
+                case 10:
+                    uncheckFontSize();
+                    radioFont10.IsChecked = true;
+                    break;
+                case 12:
+                    uncheckFontSize();
+                    radioFont12.IsChecked = true;
+                    break;
+                case 14:
+                    uncheckFontSize();
+                    radioFont14.IsChecked = true;
+                    break;
+                case 16:
+                    uncheckFontSize();
+                    radioFont16.IsChecked = true;
+                    break;
+                case 18:
+                    uncheckFontSize();
+                    radioFont18.IsChecked = true;
+                    break;
+                case 20:
+                    uncheckFontSize();
+                    radioFont20.IsChecked = true;
+                    break;
+                case 22:
+                    uncheckFontSize();
+                    radioFont22.IsChecked = true;
+                    break;
+                case 24:
+                    uncheckFontSize();
+                    radioFont24.IsChecked = true;
+                    break;
+                case 26:
+                    uncheckFontSize();
+                    radioFont26.IsChecked = true;
+                    break;
+                case 28:
+                    uncheckFontSize();
+                    radioFont28.IsChecked = true;
+                    break;
+                case 30:
+                    uncheckFontSize();
+                    radioFont30.IsChecked = true;
+                    break;
+                case 32:
+                    uncheckFontSize();
+                    radioFont32.IsChecked = true;
+                    break;
+                case 34:
+                    uncheckFontSize();
+                    radioFont34.IsChecked = true;
+                    break;
+                case 36:
+                    uncheckFontSize();
+                    radioFont36.IsChecked = true;
+                    break;
+                case 38:
+                    uncheckFontSize();
+                    radioFont38.IsChecked = true;
+                    break;
+                case 40:
+                    uncheckFontSize();
+                    radioFont40.IsChecked = true;
+                    break;
+                case 80:
+                    uncheckFontSize();
+                    radioFont80.IsChecked = true;
+                    break;
+                case 120:
+                    uncheckFontSize();
+                    radioFont120.IsChecked = true;
+                    break;
+            }
+        }
+
+        private void displayAlignContentOnContextMenu()
+        {
+            switch (Properties.Settings.Default.ContentAlign.ToLower())
+            {
+                case "left":
+                    uncheckContentAlign();
+                    radioAlignContentLeft.IsChecked = true;
+                    break;
+                case "center":
+                    uncheckContentAlign();
+                    radioAlignContentCenter.IsChecked = true;
+                    break;
+                case "right":
+                    uncheckContentAlign();
+                    radioAlignContentRight.IsChecked = true;
+                    break;
+            }
+        }
+
+        private void displayAlignLocationOnContextMenu()
+        {
+            switch (Properties.Settings.Default.LocationAlign.ToLower())
+            {
+                case "left":
+                    uncheckLocationAlign();
+                    radioAlignLocationLeft.IsChecked = true;
+                    break;
+                case "center":
+                    uncheckLocationAlign();
+                    radioAlignLocationCenter.IsChecked = true;
+                    break;
+                case "right":
+                    uncheckLocationAlign();
+                    radioAlignLocationRight.IsChecked = true;
+                    break;
+            }
+        }
+
+        private void displayFullscreenOnContextMenu()
+        {
+            mnuFullscreen.IsChecked = Properties.Settings.Default.Fullscreen;
+        }
+
+        private void displayAlwaysOnTopOnContextMenu()
+        {
+            mnuAlwaysOnTop.IsChecked = Properties.Settings.Default.AlwaysOnTop;
+        }
+
+        private void displayPlayRandomOnContextMenu()
+        {
+            mnuPlayRandom.IsChecked = Properties.Settings.Default.PlayRandom;
+        }
+
+        private void uncheckIntervals()
+        {
+            radioInterval3s.IsChecked = false;
+            radioInterval10s.IsChecked = false;
+            radioInterval20s.IsChecked = false;
+            radioInterval30s.IsChecked = false;
+            radioInterval1.IsChecked = false;
+            radioInterval3.IsChecked = false;
+            radioInterval5.IsChecked = false;
+            radioInterval10.IsChecked = false;
+            radioInterval15.IsChecked = false;
+            radioInterval30.IsChecked = false;
+            radioInterval60.IsChecked = false;
+        }
+
+        private void uncheckFontSize()
+        {
+            radioFont8.IsChecked = false;
+            radioFont10.IsChecked = false;
+            radioFont12.IsChecked = false;
+            radioFont14.IsChecked = false;
+            radioFont16.IsChecked = false;
+            radioFont18.IsChecked = false;
+            radioFont20.IsChecked = false;
+            radioFont22.IsChecked = false;
+            radioFont24.IsChecked = false;
+            radioFont26.IsChecked = false;
+            radioFont28.IsChecked = false;
+            radioFont30.IsChecked = false;
+            radioFont32.IsChecked = false;
+            radioFont34.IsChecked = false;
+            radioFont36.IsChecked = false;
+            radioFont38.IsChecked = false;
+            radioFont40.IsChecked = false;
+        }
+
+        private void uncheckContentAlign()
+        {
+            radioAlignContentLeft.IsChecked = false;
+            radioAlignContentCenter.IsChecked = false;
+            radioAlignContentRight.IsChecked = false;
+        }
+
+        private void uncheckLocationAlign()
+        {
+            radioAlignLocationLeft.IsChecked = false;
+            radioAlignLocationCenter.IsChecked = false;
+            radioAlignLocationRight.IsChecked = false;
         }
         #endregion
 
@@ -483,6 +760,25 @@ namespace LearningCards
             this.Topmost = Properties.Settings.Default.AlwaysOnTop;
         }
 
+        private void setFullscreen(bool isFullscreen)
+        {
+            Properties.Settings.Default.Fullscreen = isFullscreen;
+            Properties.Settings.Default.Save();
+
+            if (isFullscreen)
+            {
+                this.WindowState = WindowState.Maximized;
+                this.WindowStyle = WindowStyle.None;
+                this.Topmost = true;
+            }
+            else
+            {
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+                setWindowSize();
+                setAlwaysOnTop();
+            }
+        }
+
         private void refreshPositionControls()
         {
             //history is enabled and the current model did not reach the end of history
@@ -503,72 +799,6 @@ namespace LearningCards
             {
                 btnBack.IsEnabled = false;
             }
-        }
-
-        private void displayIntervalOnContextMenu()
-        {
-            switch (Properties.Settings.Default.Interval)
-            {
-                case 3:
-                    uncheckIntervals();
-                    radioInterval3s.IsChecked = true;
-                    break;
-                case 10:
-                    uncheckIntervals();
-                    radioInterval10s.IsChecked = true;
-                    break;
-                case 20:
-                    uncheckIntervals();
-                    radioInterval20s.IsChecked = true;
-                    break;
-                case 30:
-                    uncheckIntervals();
-                    radioInterval30s.IsChecked = true;
-                    break;
-                case 60:
-                    uncheckIntervals();
-                    radioInterval1.IsChecked = true;
-                    break;
-                case 180:
-                    uncheckIntervals();
-                    radioInterval3.IsChecked = true;
-                    break;
-                case 300:
-                    uncheckIntervals();
-                    radioInterval5.IsChecked = true;
-                    break;
-                case 600:
-                    uncheckIntervals();
-                    radioInterval10.IsChecked = true;
-                    break;
-                case 900:
-                    uncheckIntervals();
-                    radioInterval15.IsChecked = true;
-                    break;
-                case 1800:
-                    uncheckIntervals();
-                    radioInterval30.IsChecked = true;
-                    break;
-                case 3600:
-                    uncheckIntervals();
-                    radioInterval60.IsChecked = true;
-                    break;
-            }
-        }
-
-        private void uncheckIntervals()
-        {
-            radioInterval3s.IsChecked = false;
-            radioInterval10s.IsChecked = false;
-            radioInterval20s.IsChecked = false;
-            radioInterval30s.IsChecked = false;
-            radioInterval1.IsChecked = false;
-            radioInterval3.IsChecked = false;
-            radioInterval5.IsChecked = false;
-            radioInterval10.IsChecked = false;
-            radioInterval15.IsChecked = false;
-            radioInterval30.IsChecked = false;
-            radioInterval60.IsChecked = false;
         }
 
         private void setTimer()
@@ -632,7 +862,11 @@ namespace LearningCards
 
             if (Properties.Settings.Default.Maximized)
             {
-                WindowState = WindowState.Maximized;
+                this.WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                this.WindowState = WindowState.Normal;
             }
         }
 
@@ -741,6 +975,15 @@ namespace LearningCards
                 settings.AppendLine("+ Always on top is not active");
             }
 
+            if (Properties.Settings.Default.Fullscreen)
+            {
+                settings.AppendLine("+ Fullscreen is active");
+            }
+            else
+            {
+                settings.AppendLine("+ Fullscreen is not active");
+            }
+
             settings.AppendLine($"+ Content is aligned to {Properties.Settings.Default.ContentAlign}");
             settings.AppendLine($"+ Location is aligned to {Properties.Settings.Default.LocationAlign}");
 
@@ -766,152 +1009,6 @@ namespace LearningCards
             }
         }
 
-        private void uncheckFontSize()
-        {
-            radioFont8.IsChecked = false;
-            radioFont10.IsChecked = false;
-            radioFont12.IsChecked = false;
-            radioFont14.IsChecked = false;
-            radioFont16.IsChecked = false;
-            radioFont18.IsChecked = false;
-            radioFont20.IsChecked = false;
-            radioFont22.IsChecked = false;
-            radioFont24.IsChecked = false;
-            radioFont26.IsChecked = false;
-            radioFont28.IsChecked = false;
-            radioFont30.IsChecked = false;
-            radioFont32.IsChecked = false;
-            radioFont34.IsChecked = false;
-            radioFont36.IsChecked = false;
-            radioFont38.IsChecked = false;
-            radioFont40.IsChecked = false;
-        }
-
-        private void displayFontSizeOnContextMenu()
-        {
-            switch (Properties.Settings.Default.FontSize)
-            {
-                case 8:
-                    uncheckFontSize();
-                    radioFont8.IsChecked = true;
-                    break;
-                case 10:
-                    uncheckFontSize();
-                    radioFont10.IsChecked = true;
-                    break;
-                case 12:
-                    uncheckFontSize();
-                    radioFont12.IsChecked = true;
-                    break;
-                case 14:
-                    uncheckFontSize();
-                    radioFont14.IsChecked = true;
-                    break;
-                case 16:
-                    uncheckFontSize();
-                    radioFont16.IsChecked = true;
-                    break;
-                case 18:
-                    uncheckFontSize();
-                    radioFont18.IsChecked = true;
-                    break;
-                case 20:
-                    uncheckFontSize();
-                    radioFont20.IsChecked = true;
-                    break;
-                case 22:
-                    uncheckFontSize();
-                    radioFont22.IsChecked = true;
-                    break;
-                case 24:
-                    uncheckFontSize();
-                    radioFont24.IsChecked = true;
-                    break;
-                case 26:
-                    uncheckFontSize();
-                    radioFont26.IsChecked = true;
-                    break;
-                case 28:
-                    uncheckFontSize();
-                    radioFont28.IsChecked = true;
-                    break;
-                case 30:
-                    uncheckFontSize();
-                    radioFont30.IsChecked = true;
-                    break;
-                case 32:
-                    uncheckFontSize();
-                    radioFont32.IsChecked = true;
-                    break;
-                case 34:
-                    uncheckFontSize();
-                    radioFont34.IsChecked = true;
-                    break;
-                case 36:
-                    uncheckFontSize();
-                    radioFont36.IsChecked = true;
-                    break;
-                case 38:
-                    uncheckFontSize();
-                    radioFont38.IsChecked = true;
-                    break;
-                case 40:
-                    uncheckFontSize();
-                    radioFont40.IsChecked = true;
-                    break;
-            }
-        }
-
-        private void uncheckContentAlign()
-        {
-            radioAlignContentLeft.IsChecked = false;
-            radioAlignContentCenter.IsChecked = false;
-            radioAlignContentRight.IsChecked = false;
-        }
-
-        private void uncheckLocationAlign()
-        {
-            radioAlignLocationLeft.IsChecked = false;
-            radioAlignLocationCenter.IsChecked = false;
-            radioAlignLocationRight.IsChecked = false;
-        }
-
-        private void displayAlignContentOnContextMenu()
-        {
-            switch (Properties.Settings.Default.ContentAlign.ToLower())
-            {
-                case "left":
-                    uncheckContentAlign();
-                    radioAlignContentLeft.IsChecked = true;
-                    break;
-                case "center":
-                    uncheckContentAlign();
-                    radioAlignContentCenter.IsChecked = true;
-                    break;
-                case "right":
-                    uncheckContentAlign();
-                    radioAlignContentRight.IsChecked = true;
-                    break;
-            }
-        }
-
-        private void displayAlignLocationOnContextMenu()
-        {
-            switch (Properties.Settings.Default.LocationAlign.ToLower())
-            {
-                case "left":
-                    uncheckLocationAlign();
-                    radioAlignLocationLeft.IsChecked = true;
-                    break;
-                case "center":
-                    uncheckLocationAlign();
-                    radioAlignLocationCenter.IsChecked = true;
-                    break;
-                case "right":
-                    uncheckLocationAlign();
-                    radioAlignLocationRight.IsChecked = true;
-                    break;
-            }
-        }
+       
     }
 }
