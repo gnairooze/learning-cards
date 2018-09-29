@@ -169,18 +169,6 @@ namespace LearningCards.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Learning Cards")]
-        public string Title {
-            get {
-                return ((string)(this["Title"]));
-            }
-            set {
-                this["Title"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool AlwaysOnTop {
             get {
@@ -200,6 +188,18 @@ namespace LearningCards.Properties {
             }
             set {
                 this["Fullscreen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Learning Cards - Python Auto")]
+        public string Title {
+            get {
+                return ((string)(this["Title"]));
+            }
+            set {
+                this["Title"] = value;
             }
         }
     }

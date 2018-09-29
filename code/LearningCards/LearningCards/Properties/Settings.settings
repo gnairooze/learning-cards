@@ -38,14 +38,14 @@
     <Setting Name="LocationAlign" Type="System.String" Scope="User">
       <Value Profile="(Default)">Left</Value>
     </Setting>
-    <Setting Name="Title" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Learning Cards</Value>
-    </Setting>
     <Setting Name="AlwaysOnTop" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Fullscreen" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Title" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Learning Cards - Python Auto</Value>
     </Setting>
   </Settings>
 </SettingsFile>

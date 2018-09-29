@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -709,14 +710,102 @@ namespace LearningCards
         #region import export handlers
         private void mnuImportCSV_Click(object sender, RoutedEventArgs e)
         {
+            if (_Timer.IsEnabled)
+            {
+                btnPause_Click(sender, e);
+            }
+            
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+            openFileDialog.Filter = "CSV packages (*.zip)|*.zip|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
-                System.IO.File.Copy(openFileDialog.FileName, Properties.Settings.Default.DataPath, true);
+                string message;
+                Data.ImportCSVPackage(openFileDialog.FileName, out message);
+
+                if (!string.IsNullOrEmpty(message))
+                {
+                    MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    return;
+                }
+
+                loadSettingsFromFile();
 
                 loadData(Properties.Settings.Default.DataPath);
+
+                setContextMenu();
+
+                resetControls();
+
+                btnPause_Click(sender, e);
             }
+        }
+
+        private void loadSettingsFromFile()
+        {
+            var xml = new System.Xml.XmlDocument();
+            xml.Load(@".\Resources\app.config");
+
+            var settings = xml.SelectSingleNode("configuration/userSettings/LearningCards.Properties.Settings");
+
+            for (int i = 0; i < settings.ChildNodes.Count; i++)
+            {
+                var setting = settings.ChildNodes[i];
+                string value = setting.ChildNodes[0].InnerText;
+
+                switch (setting.Attributes["name"].Value)
+                {
+                    case "Interval":
+                        Properties.Settings.Default.Interval = int.Parse(value);
+                        break;
+                    case "FontSize":
+                        Properties.Settings.Default.FontSize = int.Parse(value);
+                        break;
+                    case "Top":
+                        Properties.Settings.Default.Top = int.Parse(value);
+                        break;
+                    case "Left":
+                        Properties.Settings.Default.Left = int.Parse(value);
+                        break;
+                    case "Height":
+                        Properties.Settings.Default.Height = int.Parse(value);
+                        break;
+                    case "Width":
+                        Properties.Settings.Default.Width = int.Parse(value);
+                        break;
+                    case "Maximized":
+                        Properties.Settings.Default.Maximized = bool.Parse(value);
+                        break;
+                    case "PlayRandom":
+                        Properties.Settings.Default.PlayRandom = bool.Parse(value);
+                        break;
+                    case "BackgroundColor":
+                        Properties.Settings.Default.BackgroundColor = value;
+                        break;
+                    case "DataPath":
+                        Properties.Settings.Default.DataPath = value;
+                        break;
+                    case "ContentAlign":
+                        Properties.Settings.Default.ContentAlign = value;
+                        break;
+                    case "LocationAlign":
+                        Properties.Settings.Default.LocationAlign = value;
+                        break;
+                    case "AlwaysOnTop":
+                        Properties.Settings.Default.AlwaysOnTop = bool.Parse(value);
+                        break;
+                    case "Fullscreen":
+                        Properties.Settings.Default.Fullscreen = bool.Parse(value);
+                        break;
+                    case "Title":
+                        Properties.Settings.Default.Title = value;
+                        break;
+                }
+            }
+
+            Properties.Settings.Default.Save();
+
+            xml = null;
         }
         #endregion
 
@@ -755,6 +844,7 @@ namespace LearningCards
         }
         #endregion
 
+        #region change screen elements
         private void setAlwaysOnTop()
         {
             this.Topmost = Properties.Settings.Default.AlwaysOnTop;
@@ -777,74 +867,6 @@ namespace LearningCards
                 setWindowSize();
                 setAlwaysOnTop();
             }
-        }
-
-        private void refreshPositionControls()
-        {
-            //history is enabled and the current model did not reach the end of history
-            if (this.PositionHistoryIndex != -1 && this.PositionHistoryIndex < this.PositionHistory.Count - 1)
-            {
-                btnForward.IsEnabled = true;
-            }
-            else
-            {
-                btnForward.IsEnabled = false;
-            }
-
-            if (this.PositionHistoryIndex != 0 && this.PositionHistory.Count > 1)
-            {
-                btnBack.IsEnabled = true;
-            }
-            else
-            {
-                btnBack.IsEnabled = false;
-            }
-        }
-
-        private void setTimer()
-        {
-            int minutes = Properties.Settings.Default.Interval / 60;
-            int seconds = Properties.Settings.Default.Interval % 60;
-
-            _Timer.Interval = new TimeSpan(0, minutes, seconds);
-        }
-
-        private void displayModel(Model model)
-        {
-            txtContent.Text = model.Content;
-            txtContent.FlowDirection = model.LTR ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
-            lnkLocation.NavigateUri = model.URL;
-            lnkContent.Text = model.Location;
-            lnkContent.FlowDirection = model.LTR ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
-
-            if (model.ImageLocation != string.Empty)
-            {
-                imgMain.Source = new BitmapImage(new Uri(System.IO.Path.GetFullPath(model.ImageLocation)));
-            }
-
-            string cardNoContent = $"{this.Position + 1} - {this.Models.Count}";
-            lblCardNo.Content = cardNoContent;
-        }
-
-        private Model getModel()
-        {
-            if (Properties.Settings.Default.PlayRandom)
-            {
-                this.Position = _Random.Next(0, this.Models.Count);
-            }
-            else
-            {
-                if (this.Position + 1 >= this.Models.Count)
-                {
-                    this.Position = 0;
-                }
-                else
-                {
-                    this.Position++;
-                }
-            }
-
-            return this.Models.ElementAt(this.Position);
         }
 
         private void setFontSize(int fontSize)
@@ -921,6 +943,89 @@ namespace LearningCards
             txtContent.Background = color;
             txtContent.BorderBrush = color;
         }
+        #endregion
+
+        #region play cards
+        private void refreshPositionControls()
+        {
+            //history is enabled and the current model did not reach the end of history
+            if (this.PositionHistoryIndex != -1 && this.PositionHistoryIndex < this.PositionHistory.Count - 1)
+            {
+                btnForward.IsEnabled = true;
+            }
+            else
+            {
+                btnForward.IsEnabled = false;
+            }
+
+            if (this.PositionHistoryIndex != 0 && this.PositionHistory.Count > 1)
+            {
+                btnBack.IsEnabled = true;
+            }
+            else
+            {
+                btnBack.IsEnabled = false;
+            }
+        }
+
+        private void setTimer()
+        {
+            int minutes = Properties.Settings.Default.Interval / 60;
+            int seconds = Properties.Settings.Default.Interval % 60;
+
+            _Timer.Interval = new TimeSpan(0, minutes, seconds);
+        }
+
+        private void displayModel(Model model)
+        {
+            txtContent.Text = model.Content;
+            txtContent.FlowDirection = model.LTR ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+            lnkLocation.NavigateUri = model.URL;
+            lnkContent.Text = model.Location;
+            lnkContent.FlowDirection = model.LTR ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+
+            if (model.ImageLocation != string.Empty)
+            {
+                FileStream stream = File.OpenRead(System.IO.Path.GetFullPath(model.ImageLocation));
+
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.StreamSource = stream;
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                bitmap.Freeze();
+
+                imgMain.Source = bitmap;
+
+                stream.Close();
+                stream.Dispose();
+                stream = null;
+            }
+
+            string cardNoContent = $"{this.Position + 1} - {this.Models.Count}";
+            lblCardNo.Content = cardNoContent;
+        }
+
+        private Model getModel()
+        {
+            if (Properties.Settings.Default.PlayRandom)
+            {
+                this.Position = _Random.Next(0, this.Models.Count);
+            }
+            else
+            {
+                if (this.Position + 1 >= this.Models.Count)
+                {
+                    this.Position = 0;
+                }
+                else
+                {
+                    this.Position++;
+                }
+            }
+
+            return this.Models.ElementAt(this.Position);
+        }
 
         private string pluralS(int n)
         {
@@ -931,6 +1036,24 @@ namespace LearningCards
 
             return string.Empty;
         }
+
+        private void pausePlay(string action)
+        {
+            switch (action.ToLower())
+            {
+                case "pause":
+                    _Timer.Stop();
+                    this.cntntPause.Kind = MaterialDesignThemes.Wpf.PackIconKind.Play;
+                    this.Title += " - Paused";
+                    break;
+                case "play":
+                    _Timer.Start();
+                    this.cntntPause.Kind = MaterialDesignThemes.Wpf.PackIconKind.Pause;
+                    this.Title = Properties.Settings.Default.Title;
+                    break;
+            }
+        }
+        #endregion
 
         private string readSettings()
         {
@@ -992,23 +1115,5 @@ namespace LearningCards
             return settings.ToString();
         }
 
-        private void pausePlay(string action)
-        {
-            switch (action.ToLower())
-            {
-                case "pause":
-                    _Timer.Stop();
-                    this.cntntPause.Kind = MaterialDesignThemes.Wpf.PackIconKind.Play;
-                    this.Title += " - Paused";
-                    break;
-                case "play":
-                    _Timer.Start();
-                    this.cntntPause.Kind = MaterialDesignThemes.Wpf.PackIconKind.Pause;
-                    this.Title = Properties.Settings.Default.Title;
-                    break;
-            }
-        }
-
-       
     }
 }

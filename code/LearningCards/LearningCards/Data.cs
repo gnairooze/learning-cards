@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,6 +79,38 @@ namespace LearningCards
             output = output.Replace("\\n", Environment.NewLine);
 
             return output;
+        }
+
+        public static void ImportCSVPackage(string packagePath, out string message)
+        {
+            message = string.Empty;
+
+            try
+            {
+                DirectoryInfo dir = new DirectoryInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).Parent;
+                string resourcesPath = Path.Combine(dir.FullName, "Resources");
+                DirectoryInfo resourcesDir = new DirectoryInfo(resourcesPath);
+                
+                emptyFolder(resourcesDir);
+
+                ZipFile.ExtractToDirectory(packagePath, resourcesPath);
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+        }
+
+        private static void emptyFolder(DirectoryInfo directory)
+        {
+            foreach (FileInfo file in directory.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo subdirectory in directory.GetDirectories())
+            {
+                emptyFolder(subdirectory);
+            }
         }
     }
 }

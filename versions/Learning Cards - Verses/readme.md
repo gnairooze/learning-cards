@@ -12,9 +12,18 @@
 2.8. Content alignment
 2.9. Location alignment
 2.10. Set the window title
+3. The app can import CSV package contains the following:
+3.1. csv file containing the cards content
+3.2. app.config file containing the configuration of the app
+3.3. images that are referenced from the csv file
 
 
 # Releases
+
+## 1.13
+1. Replace Import CSV File with Import CSV Package
+2. Enhance how to load images to be able to replace it while the app is running
+3. Load settings from the package app.config
 
 ## 1.12
 
