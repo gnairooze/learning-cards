@@ -20,6 +20,9 @@
 
 # Releases
 
+## 1.14
+1. Fix Alt+F4 to close the application
+
 ## 1.13
 1. Replace Import CSV File with Import CSV Package
 2. Enhance how to load images to be able to replace it while the app is running
