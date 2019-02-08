@@ -203,6 +203,10 @@ namespace LearningCards
                     displayFullscreenOnContextMenu();
                 }
             }
+            else if (e.Key == Key.System && e.SystemKey == Key.F4)
+            {
+                Application.Current.Shutdown();
+            }
 
             e.Handled = true;
         }
