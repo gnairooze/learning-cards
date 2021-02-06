@@ -1,21 +1,21 @@
 ﻿# Notes
 
 1. This app depends on .net framework 4.6.1
-2. In its config, you can set the following:
-2.1. The location of the data file
-2.2. The interval in minutes between each record
-2.3. Play records in random order or standard order
-2.4. Font size
-2.5. Background color
-2.6. Window position and if it is maximized
-2.7. Set window always on top
-2.8. Content alignment
-2.9. Location alignment
-2.10. Set the window title
-3. The app can import CSV package contains the following:
-3.1. csv file containing the cards content
-3.2. app.config file containing the configuration of the app
-3.3. images that are referenced from the csv file
+2. In its config, you can set the following:  
+2.1. The location of the data file  
+2.2. The interval in minutes between each record  
+2.3. Play records in random order or standard order  
+2.4. Font size  
+2.5. Background color  
+2.6. Window position and if it is maximized  
+2.7. Set window always on top  
+2.8. Content alignment  
+2.9. Location alignment  
+2.10. Set the window title  
+3. The app can import CSV package contains the following:  
+3.1. csv file containing the cards content  
+3.2. app.config file containing the configuration of the app  
+3.3. images that are referenced from the csv file  
 
 
 # Releases
